@@ -191,10 +191,16 @@ function displayRecipes(recipesData) {
     const likebox = document.createElement("div");
     likebox.classList.add("likebox");
 
-    const likeButton = document.createElement("span");
-    likeButton.classList.add("like-button");
-    likeButton.innerHTML = recipe.isLiked ? "&#9829;" : "&#9825;";
-    likeButton.addEventListener("click", () => toggleLike(index));
+    // const likeButton = document.createElement("span");
+    // likeButton.classList.add("like-button");
+    // likeButton.innerHTML = recipe.isLiked ? '❤️' : '🤍';
+    // likeButton.addEventListener("click", () => toggleLike(index));
+    // likebox.appendChild(likeButton);
+
+    const likeButton = document.createElement('span');
+    likeButton.classList.add('like-button');
+    likeButton.innerHTML = recipe.isLiked ? '❤️' : '🤍';
+    likeButton.addEventListener('click', () => toggleLike(index));
     likebox.appendChild(likeButton);
 
     const chatsymbol = document.createElement("span");
@@ -283,8 +289,20 @@ function filterByRating(ratingType) {
 
 function toggleLike(recipeIndex) {
   recipes[recipeIndex].isLiked = !recipes[recipeIndex].isLiked;
+  displayRecipes(getFilteredRecipes());
 }
 
+function getFilteredRecipes() {
+  const activeFilter = document.querySelector('.filter-button.active').id;
+  switch (activeFilter) {
+      case 'showVeg':
+          return recipes.filter((recipe) => recipe.type === 'veg');
+      case 'showNonVeg':
+          return recipes.filter((recipe) => recipe.type === 'non-veg');
+      default:
+          return recipes;
+  }
+}
 function toggleDrawer() {
   // let switching = document.getElementById("navtoggle");
   let togglingNav = document.getElementById("togglenav");
